@@ -1,20 +1,25 @@
 <?php 
 
 function metodo_naive_bayes($reliability,$number_of,$capacity,$costo){
+
+  ///Conexión a la base de datos MySql
+  $host = "127.0.0.1";
+  $user = "root";
+  // $host = "163.178.107.10";
+  // $user = "laboratorios";
+  // $password = "KmZpo.2796";+
+  $password ="";
+  $data_base = "if7103_tarea2_b82444";
+  // $conexion = mysqli_connect($host,$user,$password,$data_base);
+  $conexion = mysqli_connect($host,$user,$password ,$data_base);
   
   $frecuenciaClaseA = 1;
   $frecuenciaClaseB = 1;
 
-  //Conexión a la base de datos MySql
-  $host = "163.178.107.10";
-  $user = "laboratorios";
-  $password = "KmZpo.2796";
-  $data_base = "if7103_tarea2_b82444";
-  $conexion = mysqli_connect($host,$user,$password,$data_base);
 
   //Trae las probabilidades de redes
   $datosRedes = "SELECT * FROM  probabilidad_redes";
-  $conexionRedes = mysqli_query($connection, $datosRedes);
+  $conexionRedes = mysqli_query($conexion, $datosRedes);
 
   //Trae las frecuencias de redes
   $datosFrecuenciasRedes = "SELECT * FROM frecuencias_redes";
@@ -24,37 +29,32 @@ function metodo_naive_bayes($reliability,$number_of,$capacity,$costo){
   //while que recorre todos los valores traidos desde la base de datos
   while ($row = mysqli_fetch_array($conexionRedes)) {
       //Datos provenientes de la Base de datos
-      $datoReliability = $row['valor_probabilidad_reliability'];
-      $datoNumero = $row['valor_probabilidad_number_of'];
-      $datoCapacity = $row['valor_probabilidad_capacity'];
-      $datoCosto = $row['valor_probabilidad_costo'];
-
       //Datos para comparar el reliability 
       if($row['class'] == 'A' && $row['valor_caracteristica_reliability'] == $reliability):
-        $frecuenciaClaseA = $frecuenciaClaseA * $datoReliability;
+        $frecuenciaClaseA = $frecuenciaClaseA * $row['valor_probabilidad_reliability'];
       elseif($row['class'] == 'B' && $row['valor_caracteristica_reliability'] == $reliability):
-        $frecuenciaClaseB = $frecuenciaClaseB * $datoReliability;
+        $frecuenciaClaseB = $frecuenciaClaseB * $row['valor_probabilidad_reliability'];
       endif;
 
       //Datos para comparar el number of links 
       if ($row['class'] == 'A' && $row['valor_caracteristica_number_of'] == $number_of):
-        $frecuenciaClaseA = $frecuenciaClaseA * $datoNumero;
+        $frecuenciaClaseA = $frecuenciaClaseA * $row['valor_probabilidad_number_of'];
       elseif($row['class'] == 'B' && $row['valor_caracteristica_number_of'] == $number_of):
-        $frecuenciaClaseB = $frecuenciaClaseB * $datoNumero;
+        $frecuenciaClaseB = $frecuenciaClaseB * $row['valor_probabilidad_number_of'];
       endif;
 
       //Datos para comparar el capacity 
       if($row['class'] == 'A' && $row['valor_caracteristica_capacity'] == $capacity):
-        $frecuenciaClaseA = $frecuenciaClaseA * $datoCapacity;
+        $frecuenciaClaseA = $frecuenciaClaseA * $row['valor_probabilidad_capacity'];
       elseif($row['class'] == 'B' && $row['valor_caracteristica_capacity'] == $capacity):
-        $frecuenciaClaseB = $frecuenciaClaseB * $datoCapacity;
+        $frecuenciaClaseB = $frecuenciaClaseB * $row['valor_probabilidad_capacity'];
       endif;
 
       //Datos para comparar el costo 
       if($row['class'] == 'A' && $row['valor_caracteristica_costo'] == $costo):
-        $frecuenciaClaseA = $frecuenciaClaseA * $datoCosto;
+        $frecuenciaClaseA = $frecuenciaClaseA * $row['valor_probabilidad_costo'];
       elseif($row['class'] == 'B' && $row['valor_caracteristica_costo'] == $costo):
-        $frecuenciaClaseB = $frecuenciaClaseB * $datoCosto;
+        $frecuenciaClaseB = $frecuenciaClaseB * $row['valor_probabilidad_costo'];
       endif;        
   }
 
@@ -63,14 +63,15 @@ function metodo_naive_bayes($reliability,$number_of,$capacity,$costo){
     //Datos provenientes de la Base de datos
     $nClaseA = $row['nClaseA'];
     $nClaseB = $row['nClaseB'];
-}
+  }
+
   $redes = "";
   //Producto de frecuencia
   //Compara los totales para establecer cual es el mayor valor
-  if(($frecuenciaClaseA * $nClaseA) > ($frecuenciaClaseB * $nClaseB)):
-      $redes = 'A';
+  if(($frecuenciaClaseA * (18/35)) > ($frecuenciaClaseB * (19/35))):
+    $redes = 'A';
   else:
-      $redes = 'B';
+    $redes = 'B';
   endif;
 
   return $redes;//Retorna el valor

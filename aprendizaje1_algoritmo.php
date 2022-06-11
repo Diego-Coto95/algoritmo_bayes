@@ -1,11 +1,16 @@
 <?php 
 function metodo_naive_bayes($ca,$ec,$ea,$or){
-        //Conexion con la base de datos
-        $host = "163.178.107.10";
-        $user = "laboratorios";
-        $password = "KmZpo.2796";
+
+        //Conexión a la base de datos MySql
+        $host = "127.0.0.1";
+        $user = "root";
+        // $host = "163.178.107.10";
+        // $user = "laboratorios";
+        // $password = "KmZpo.2796";+
+        $password ="";
         $data_base = "if7103_tarea2_b82444";
-        $conexion = mysqli_connect($host,$user,$password,$data_base);
+        // $conexion = mysqli_connect($host,$user,$password,$data_base);
+        $conexion = mysqli_connect($host,$user,$password ,$data_base);
 
         //Trae las probabilidades de estilo1
         $datosEstilo1 = "SELECT * FROM probabilidad_estilo1";
@@ -34,9 +39,9 @@ function metodo_naive_bayes($ca,$ec,$ea,$or){
 
                 //Datos para comparar el valor ec   
                 if($row['valor_caracteristica'] == $ec && $row['estilo'] == 'ACOMODADOR'):
-                        $frecuenciaAcomodador = $frecuenciaAcomodador * $Row['ec'];
+                        $frecuenciaAcomodador = $frecuenciaAcomodador * $row['ec'];
                 elseif($row['valor_caracteristica'] == $ec && $row['estilo'] == 'ASIMILADOR'):
-                        $frecuenciaAsimilador = $frecuenciaAsimilador * $Row['ec'];
+                        $frecuenciaAsimilador = $frecuenciaAsimilador * $row['ec'];
                 elseif($row['valor_caracteristica'] == $ec && $row['estilo'] == 'CONVERGENTE'):
                         $frecuenciaConvergente = $frecuenciaConvergente * $row['ec'];
                 elseif($row['valor_caracteristica'] == $ec && $row['estilo'] == 'DIVERGENTE'):
@@ -45,7 +50,7 @@ function metodo_naive_bayes($ca,$ec,$ea,$or){
 
                 //Datos para comparar el valor ea   
                 if($row['valor_caracteristica'] == $ea && $row['estilo'] == 'ACOMODADOR'):
-                        $frecuenciaAcomodador = $frecuenciaAcomodador * $Row['ea'];
+                        $frecuenciaAcomodador = $frecuenciaAcomodador * $row['ea'];
                 elseif($row['valor_caracteristica'] == $ea && $row['estilo'] == 'ASIMILADOR'):
                         $frecuenciaAsimilador = $frecuenciaAsimilador * $row['ea'];
                 elseif($row['valor_caracteristica'] == $ea && $row['estilo'] == 'CONVERGENTE'):
@@ -60,7 +65,7 @@ function metodo_naive_bayes($ca,$ec,$ea,$or){
                 elseif($row['valor_caracteristica'] == $or && $row['estilo'] == 'ASIMILADOR'):
                         $frecuenciaAsimilador = $frecuenciaAsimilador * $row['or_'];
                 elseif($row['valor_caracteristica'] == $or && $row['estilo'] == 'CONVERGENTE'):
-                        $frecuenciaConvergente = $frecuenciaConvergente * $Row['or_'];
+                        $frecuenciaConvergente = $frecuenciaConvergente * $row['or_'];
                 elseif($row['valor_caracteristica'] == $or && $row['estilo'] == 'DIVERGENTE'):
                         $frecuenciaDivergente = $frecuenciaDivergente * $row['or_'];
                 endif;
@@ -80,11 +85,11 @@ function metodo_naive_bayes($ca,$ec,$ea,$or){
         $estilo = "";
         //Producto de frecuencia
         //Compara los totales para establecer cual es el mayor valor_caracteristica
-        if((($frecuenciaAcomodador * $nAcomodador) > ($frecuenciaAsimilador * $nAsimilador)) && (($frecuenciaAcomodador * $nAcomodador) > ($frecuenciaConvergente * $nConvergente)) && (($frecuenciaAcomodador * $nAcomodador) > ($frecuenciaDivergente * $nDivergente))):
+        if((($frecuenciaAcomodador * ($nAcomodador/77)) > ($frecuenciaAsimilador * ($nAsimilador/77))) && (($frecuenciaAcomodador * ($nAcomodador/77)) > ($frecuenciaConvergente * ($nConvergente/77))) && (($frecuenciaAcomodador * ($nAcomodador/77)) > ($frecuenciaDivergente * ($nDivergente/77)))):
                 $estilo = 'ACOMODADOR';
-        elseif((($frecuenciaAsimilador * $nAsimilador) > ($frecuenciaConvergente * $nConvergente)) && (($frecuenciaAsimilador * $nAsimilador) > ($frecuenciaDivergente * $nDivergente))):
+        elseif((($frecuenciaAsimilador * ($nAsimilador/77)) > ($frecuenciaConvergente * ($nConvergente/77))) && (($frecuenciaAsimilador * ($nAsimilador/77)) > ($frecuenciaDivergente * ($nDivergente/77)))):
                 $estilo = 'ASIMILADOR';
-        elseif((($frecuenciaConvergente * $nConvergente) > ($frecuenciaDivergente * $nDivergente))):
+        elseif((($frecuenciaConvergente * ($nConvergente/77)) > ($frecuenciaDivergente * ($nDivergente/77)))):
                 $estilo = 'CONVERGENTE';
         else:
                 $estilo = 'DIVERGENTE';

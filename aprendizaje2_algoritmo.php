@@ -1,11 +1,15 @@
 <?php
 function metodo_naive_bayes($recinto,$promedio,$sexo){
-  //Conexion con la base de datos
-  $host = "163.178.107.10";
-  $user = "laboratorios";
-  $password = "KmZpo.2796";
+  //Conexión a la base de datos MySql
+  $host = "127.0.0.1";
+  $user = "root";
+  // $host = "163.178.107.10";
+  // $user = "laboratorios";
+  // $password = "KmZpo.2796";+
+  $password ="";
   $data_base = "if7103_tarea2_b82444";
-  $conexion = mysqli_connect($host,$user,$password,$data_base);
+  // $conexion = mysqli_connect($host,$user,$password,$data_base);
+  $conexion = mysqli_connect($host,$user,$password ,$data_base);
 
   //Trae las valor_probabilidades de sexo
   $datosSexo = "SELECT * FROM  probabilidad_sexo";
@@ -80,11 +84,11 @@ function metodo_naive_bayes($recinto,$promedio,$sexo){
   
   //Producto de frecuencia
   //Compara los totales para establecer cual es el mayor valor
-  if ((($frecuenciaAcomodador * $nAcomodador) > ($frecuenciaAsimilador * $nAsimilador)) && (($frecuenciaAcomodador * $nAcomodador) > ($frecuenciaConvergente * $nConvergente)) && (($frecuenciaAcomodador * $nAcomodador) > ($frecuenciaDivergente * $nDivergente))):
+  if ((($frecuenciaAcomodador * ($nAcomodador/77)) > ($frecuenciaAsimilador * ($nAsimilador/77))) && (($frecuenciaAcomodador * ($nAcomodador/77)) > ($frecuenciaConvergente * ($nConvergente/77))) && (($frecuenciaAcomodador * ($nAcomodador/77)) > ($frecuenciaDivergente * ($nDivergente/77)))):
     $estilo = 'ACOMODADOR';
-  elseif ((($frecuenciaAsimilador * $nAsimilador) > ($frecuenciaConvergente * $nConvergente)) && (($frecuenciaAsimilador * $nAsimilador) > ($frecuenciaDivergente * $nDivergente))):
+  elseif ((($frecuenciaAsimilador * ($nAsimilador/77)) > ($frecuenciaConvergente * ($nConvergente/77))) && (($frecuenciaAsimilador * ($nAsimilador/77)) > ($frecuenciaDivergente * ($nDivergente/77)))):
     $estilo = 'ASIMILADOR';
-  elseif((($frecuenciaConvergente * $nConvergente) > ($frecuenciaDivergente * $nDivergente))):
+  elseif((($frecuenciaConvergente * ($nConvergente/77)) > ($frecuenciaDivergente * ($nDivergente/77)))):
     $estilo = 'CONVERGENTE';
   else:
     $estilo = 'DIVERGENTE';

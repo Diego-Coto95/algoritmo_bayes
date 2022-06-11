@@ -1,12 +1,16 @@
 <?php
 function metodo_naive_bayes($estilo,$promedio,$recinto){
     
-    //Conexion con la base de datos
-    $host = "163.178.107.10";
-    $user = "laboratorios";
-    $password = "KmZpo.2796";
+    //Conexión a la base de datos MySql
+    $host = "127.0.0.1";
+    $user = "root";
+    // $host = "163.178.107.10";
+    // $user = "laboratorios";
+    // $password = "KmZpo.2796";+
+    $password ="";
     $data_base = "if7103_tarea2_b82444";
-    $conexion = mysqli_connect($host,$user,$password,$data_base);
+    // $conexion = mysqli_connect($host,$user,$password,$data_base);
+    $conexion = mysqli_connect($host,$user,$password ,$data_base);
 
     //Trae las probabilidades de estilo2
     $datosEstilo = "SELECT * FROM  probabilidad_estilo2";
@@ -24,7 +28,7 @@ function metodo_naive_bayes($estilo,$promedio,$recinto){
     $datosFrecuenciasSexo = "SELECT * FROM frecuencias_sexo";
     $conexionFrecuenciaSexo = mysqli_query($conexion, $datosFrecuenciasSexo);
 
-    $frecuenciaMasculino= 1;
+    $frecuenciaMasculino = 1;
     $frecuenciaFemenino = 1;
     
     //Datos para comparar el recinto 
@@ -50,7 +54,7 @@ function metodo_naive_bayes($estilo,$promedio,$recinto){
         if ($row['promedio'] == $promedio && $row['valor_caracteristica'] == 'M'):
             $frecuenciaMasculino = $frecuenciaMasculino * $row['valor_probabilidad'];      
         elseif ($row['promedio'] == $promedio &&  $row['valor_caracteristica'] == 'F'):
-            $frecuenciaFemenino = $frecuenciaParaiso * $row['valor_probabilidad'];
+            $frecuenciaFemenino = $frecuenciaFemenino * $row['valor_probabilidad'];
         endif;
     }
     
@@ -63,9 +67,12 @@ function metodo_naive_bayes($estilo,$promedio,$recinto){
     }
     
     $sexo = "";
+
+    $totalMasculino = $frecuenciaMasculino * ($nMasculino/77);
+    $totalFemenino = $frecuenciaFemenino * ($nFemenino/77);
     //Producto de frecuencia
     //Compara los totales para establecer cual es el mayor valor
-    if(($frecuenciaMasculino * $nMasculino) > ($frecuenciaFemenino * $nFemenino)):
+    if($totalMasculino > $totalFemenino):
         $sexo='Masculino';
     else:
         $sexo='Femenino';
