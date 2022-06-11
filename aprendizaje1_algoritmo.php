@@ -1,38 +1,81 @@
 <?php 
-
-//Algoritmo que calcula la distancia euclidiana  
-function metodo_distancia_euclidiana($ca,$ec,$ea,$or){
-        
-        $valor_minimo = 1000; //Valor para que compare en la primera iteracion del algoritmo
-
-        //Conexión a la base de datos MySql
+ 
+function metodo_naive_bayes($ca,$ec,$ea,$or){
+        //Conexion con la base de datos
         $host = "163.178.107.10";
         $user = "laboratorios";
         $password = "KmZpo.2796";
-        $data_base = "if7103_tarea2_b82444";
+        $data_base = "if7103_tarea2_b72204";
+        //$data_base = "if7103_tarea2_b82444";
+        
         $conexion = mysqli_connect($host,$user,$password,$data_base);
-        $sql = "SELECT * FROM recintoEstilo"; //Trae los datos requeridos de la base de datos y se guardan en la variable $sql
-        $data_bd = mysqli_query( $conexion, $sql );
+        $frecuenciaAcomodador= 1;
+        $frecuenciaAsimilador = 1;
+        $frecuenciaConvergente = 1;
+        $frecuenciaDivergente = 1;
 
-        //Bucle para que recorra las columnas que vienen de la base de datos
-        while ($row = mysqli_fetch_array( $data_bd )) {
-                
-                $metodo_euclides=0; //Esta variable tomará el valor euclidiano a comparar  y se reiniciará cada vez que itere el bucle
+        $datosEstilo = "SELECT * FROM prob_formulario_estilo";
+        $conexionEstilo = mysqli_query($conexion, $datosEstilo);
 
-                /* Funcion matematica que me da el valor euclidiano. Saca la raíz cuadrada de la suma de las restas de dos valores elevados al cuadrado
-                uno de ellos proveniente de la base de datos y el otro ingresado por el usuario*/
-                $metodo_euclides= sqrt(pow(((int)$row['ec']-(int)$ec),2)+ pow(((int)$row['or_']-(int)$or),2)+pow(((int)$row['ca']-(int)$ca),2)+pow(((int)$row['ea']-(int)$ea),2)); 
+        while ($row = mysqli_fetch_array($conexionEstilo)) {     
+                if($row['valor'] == $ca && $row['estilo'] == 'ACOMODADOR'):
+                        $frecuenciaAcomodador = $frecuenciaAcomodador * $row['ca'];
+                elseif($row['valor'] == $ca && $row['estilo'] == 'ASIMILADOR'):
+                        $frecuenciaAsimilador = $frecuenciaAsimilador * $row['ca'];
+                elseif($row['valor'] == $ca && $row['estilo'] == 'CONVERGENTE'):
+                        $frecuenciaConvergente = $frecuenciaConvergente * $row['ca'];
+                elseif($row['valor'] == $ca && $row['estilo'] == 'DIVERGENTE'):
+                        $frecuenciaDivergente = $frecuenciaDivergente * $row['ca'];
+                endif;
 
-                /*Compara si el valor euclidiano es menor a un minimo establecido posteriormente, en este caso lo estableci en 1000.
-                En caso de que la condición se cumpla,el valor minimo remplaza al valor establecido y en la siguiente iteración vuelve a comparar
-                hasta que encuentre un valor exacto o similar.
-                */
-                if($metodo_euclides <= $valor_minimo){
-                        $valor_minimo =  $metodo_euclides;
-                        $estilo = $row['estilo'];
-                }
+                if($row['valor'] == $ec && $row['estilo'] == 'ACOMODADOR'):
+                        $frecuenciaAcomodador = $frecuenciaAcomodador * $Row['ec'];
+                elseif($row['valor'] == $ec && $row['estilo'] == 'ASIMILADOR'):
+                        $frecuenciaAsimilador = $frecuenciaAsimilador * $Row['ec'];
+                elseif($row['valor'] == $ec && $row['estilo'] == 'CONVERGENTE'):
+                        $frecuenciaConvergente = $frecuenciaConvergente * $row['ec'];
+                elseif($row['valor'] == $ec && $row['estilo'] == 'DIVERGENTE'):
+                        $frecuenciaDivergente = $frecuenciaDivergente * $row['ec'];
+                endif;
+
+                if($row['valor'] == $ea && $row['estilo'] == 'ACOMODADOR'):
+                        $frecuenciaAcomodador = $frecuenciaAcomodador * $Row['ea'];
+                elseif($row['valor'] == $ea && $row['estilo'] == 'ASIMILADOR'):
+                        $frecuenciaAsimilador = $frecuenciaAsimilador * $row['ea'];
+                elseif($row['valor'] == $ea && $row['estilo'] == 'CONVERGENTE'):
+                        $frecuenciaConvergente = $frecuenciaConvergente * $row['ea'];
+                elseif($row['valor'] == $ea && $row['estilo'] == 'DIVERGENTE'):
+                        $frecuenciaDivergente = $frecuenciaDivergente * $row['ea'];
+                endif;
+
+                if($row['valor'] == $or && $row['estilo'] == 'ACOMODADOR'):
+                        $frecuenciaAcomodador = $frecuenciaAcomodador * $row['or'];
+                elseif($row['valor'] == $or && $row['estilo'] == 'ASIMILADOR'):
+                        $frecuenciaAsimilador = $frecuenciaAsimilador * $row['or'];
+                elseif($row['valor'] == $or && $row['estilo'] == 'CONVERGENTE'):
+                        $frecuenciaConvergente = $frecuenciaConvergente * $Row['or'];
+                elseif($row['valor'] == $or && $row['estilo'] == 'DIVERGENTE'):
+                        $frecuenciaDivergente = $frecuenciaDivergente * $row['or'];
+                endif;
         }
-        return $estilo; //Variable que retorna el valor más cercano o exacto proveniente de la base de datos. Es el valor a mostrarle al usuario.
+
+        $estilo = "";
+        $nAcomodador = 14/77;
+        $nAsimilador = 21/77;
+        $nConvergente = 21/77;
+        $nDivergente = 21/77;
+
+        if((($frecuenciaAcomodador * $nAcomodador) > ($frecuenciaAsimilador * $nAsimilador)) && (($frecuenciaAcomodador * $nAcomodador) > ($frecuenciaConvergente * $nConvergente)) && (($frecuenciaAcomodador * $nAcomodador) > ($frecuenciaDivergente * $nDivergente))):
+                $estilo = 'ACOMODADOR';
+        elseif((($frecuenciaAsimilador * $nAsimilador) > ($frecuenciaConvergente * $nConvergente)) && (($frecuenciaAsimilador * $nAsimilador) > ($frecuenciaDivergente * $nDivergente))):
+                $estilo = 'ASIMILADOR';
+        elseif((($frecuenciaConvergente * $nConvergente) > ($frecuenciaDivergente * $nDivergente))):
+                $estilo = 'CONVERGENTE';
+        else:
+                $estilo = 'DIVERGENTE';
+        endif;
+
+        return $estilo;
 }
 
 ?>

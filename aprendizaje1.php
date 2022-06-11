@@ -9,7 +9,7 @@ $ea = (isset($_POST['c4']))+(isset($_POST['c12']))+(isset($_POST['c24']))+(isset
 $or = (isset($_POST['c2']))+(isset($_POST['c10']))+(isset($_POST['c22']))+(isset($_POST['c26']))+(isset($_POST['c30']))+(isset($_POST['c34']));
 
 /*Esta variable es la que se le mostrará al usuario con el resultado del algoritmo*/
-$resultado = metodo_distancia_euclidiana($ca,$ec,$ea,$or);
+$resultado = metodo_naive_bayes($ca,$ec,$ea,$or);
 
 ?>
 
