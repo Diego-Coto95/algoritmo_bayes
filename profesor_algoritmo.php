@@ -25,18 +25,6 @@ function metodo_naive_bayes($a,$b,$c,$d,$e,$f,$g,$h){
   $frecuenciaClaseI = 1;
   $frecuenciaClaseA = 1;
 
-  // while ($row = mysqli_fetch_array($conexionProfesores)) {
-  //   //Variables que guardan los valores traidos de la base de datos
-  //   $datoA = $row['a'];
-  //   $datoB = $row['b'];
-  //   $datoC = $row['c'];
-  //   $datoD = $row['d'];
-  //   $datoE = $row['e'];
-  //   $datoF = $row['f'];
-  //   $datoG = $row['g'];
-  //   $datoH = $row['h'];
-  // }
-
   while ($row = mysqli_fetch_array($conexionProfesores)) {
     $datoA = $row['a'];
     $datoB = $row['b'];
