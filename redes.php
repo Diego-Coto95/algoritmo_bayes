@@ -12,7 +12,7 @@ $costo=(isset($_POST['costo']))?$_POST['costo']:"";
 
 
 /*Esta variable es la que se le mostrará al usuario con el resultado del algoritmo*/
-$resultado = metodo_distancia_euclidiana($reliability,$number_of,$capacity,$costo);
+$resultado = metodo_naive_bayes($reliability,$number_of,$capacity,$costo);
 
 
 ?>
