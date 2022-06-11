@@ -64,6 +64,8 @@ function metodo_naive_bayes($ca,$ec,$ea,$or){
         $nConvergente = 21/77;
         $nDivergente = 21/77;
 
+        //Producto de frecuencia
+        //Compara los totales para establecer cual es el mayor valor
         if((($frecuenciaAcomodador * $nAcomodador) > ($frecuenciaAsimilador * $nAsimilador)) && (($frecuenciaAcomodador * $nAcomodador) > ($frecuenciaConvergente * $nConvergente)) && (($frecuenciaAcomodador * $nAcomodador) > ($frecuenciaDivergente * $nDivergente))):
                 $estilo = 'ACOMODADOR';
         elseif((($frecuenciaAsimilador * $nAsimilador) > ($frecuenciaConvergente * $nConvergente)) && (($frecuenciaAsimilador * $nAsimilador) > ($frecuenciaDivergente * $nDivergente))):
@@ -74,7 +76,7 @@ function metodo_naive_bayes($ca,$ec,$ea,$or){
                 $estilo = 'DIVERGENTE';
         endif;
 
-        return $estilo;
+        return $estilo;//Retorna el valor
 }
 
 ?>

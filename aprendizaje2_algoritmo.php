@@ -67,7 +67,7 @@ function metodo_naive_bayes($recinto,$promedio,$sexo){
 
   
   //Producto de frecuencia
-  //If que verifica cual es el valor mayor para escoger el estilo de aprendizaje
+  //Compara los totales para establecer cual es el mayor valor
   if ((($frecuenciaAcomodador * $nAcomodador) > ($frecuenciaAsimilador * $nAsimilador)) && (($frecuenciaAcomodador * $nAcomodador) > ($frecuenciaConvergente * $nConvergente)) && (($frecuenciaAcomodador * $nAcomodador) > ($frecuenciaDivergente * $nDivergente))):
     $estilo = 'ACOMODADOR';
   elseif ((($frecuenciaAsimilador * $nAsimilador) > ($frecuenciaConvergente * $nConvergente)) && (($frecuenciaAsimilador * $nAsimilador) > ($frecuenciaDivergente * $nDivergente))):
@@ -77,6 +77,7 @@ function metodo_naive_bayes($recinto,$promedio,$sexo){
   else:
     $estilo = 'DIVERGENTE';
   endif;
-  return $estilo;
+
+  return $estilo;//Retorna el valor
 }
 ?>

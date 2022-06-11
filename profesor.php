@@ -14,7 +14,7 @@ $g=(isset($_POST['g']))?$_POST['g']:"";
 $h=(isset($_POST['h']))?$_POST['h']:"";
 
 /*Esta variable es la que se le mostrará al usuario con el resultado del algoritmo*/
-$resultado = metodo_distancia_euclidiana($a,$b,$c,$d,$e,$f,$g,$h);
+$resultado = metodo_naive_bayes($a,$b,$c,$d,$e,$f,$g,$h);
 
 ?>
 <p class="western" align="justify" lang="es-ES"><font color="#FF0000"><font size="3"><b>CUAL ES EL TIPO DE PROFESOR?</b></font></font></p>
@@ -33,16 +33,16 @@ Escoja las opciones para calcular el tipo de profesor...<big></big>
             </td>
             <td style="vertical-align: top; width: 25%;">
                 <select name="b" id="b">
-                    <option value="1">Femenino</option>
-                    <option value="2">Masculino</option>
-                    <option value="3">NA</option>
+                    <option value="F">Femenino</option>
+                    <option value="M">Masculino</option>
+                    <option value="NA">NA</option>
                 </select>Sexo<br>
             </td>
             <td style="vertical-align: top;">
                 <select name="c" id="c">
-                    <option value="1">Principiante</option>
-                    <option value="2">Intermedio</option>
-                    <option value="3">Avanzado</option>
+                    <option value="B">Principiante</option>
+                    <option value="I">Intermedio</option>
+                    <option value="A">Avanzado</option>
                 </select>Criterio de experienca<br>
             </td>
             <td style="vertical-align: top;">
@@ -56,30 +56,30 @@ Escoja las opciones para calcular el tipo de profesor...<big></big>
         <tr>
             <td style="vertical-align: top;">
                 <select name="e" id="e">
-                    <option value="1">Toma de decision</option>
-                    <option value="2">Diseño de red</option>
-                    <option value="3">Otro</option>
+                    <option value="DM">Toma de decision</option>
+                    <option value="ND">Diseño de red</option>
+                    <option value="O">Otro</option>
                 </select>Especialización<br>
             </td>
             <td style="vertical-align: top;">
                 <select name="f" id="f">
-                    <option value="1">Bajo</option>
-                    <option value="2">Promedio</option>
-                    <option value="3">Alto</option>
+                    <option value="L">Bajo</option>
+                    <option value="A">Promedio</option>
+                    <option value="H">Alto</option>
                 </select>Habilidades computacionales<br>
             </td>
             <td style="vertical-align: top;">
                 <select name="g" id="g">
-                    <option value="1">Nunca</option>
-                    <option value="2">A veces</option>
-                    <option value="3">A menudo</option>
+                    <option value="N">Nunca</option>
+                    <option value="S">A veces</option>
+                    <option value="O">A menudo</option>
                 </select>Experiencia en tecnología para la enseñanza<br>
             </td>
             <td style="vertical-align: top;">
                 <select name="h" id="h">
-                    <option value="1">Nunca</option>
-                    <option value="2">A veces</option>
-                    <option value="3">A menudo</option>
+                    <option value="N">Nunca</option>
+                    <option value="S">A veces</option>
+                    <option value="O">A menudo</option>
                 </select>Experiencia usando un sitio web
             </td>
         </tr>

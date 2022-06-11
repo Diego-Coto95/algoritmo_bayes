@@ -54,13 +54,14 @@ function metodo_naive_bayes($estilo,$promedio,$recinto){
     $nFemenino = 13/76;
     
     //Producto de frecuencia
-    //If que verifica cual es el valor mayor para escoger el recinto
+    //Compara los totales para establecer cual es el mayor valor
     if(($frecuenciaMasculino * $nMasculino) > ($frecuenciaFemenino * $nFemenino)):
         $sexo='Masculino';
     else:
         $sexo='Femenino';
     endif;
-    return $sexo;
+
+    return $sexo;//Retorna el valor
 }
 ?>
 

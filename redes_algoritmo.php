@@ -5,6 +5,15 @@ function metodo_naive_bayes($reliability,$number_of,$capacity,$costo){
   $frecuenciaClaseA = 1;
   $frecuenciaClaseB = 1;
 
+  //Conexión a la base de datos MySql
+  $host = "163.178.107.10";
+  $user = "laboratorios";
+  $password = "KmZpo.2796";
+  $data_base = "if7103_tarea2_b72204";
+  //$data_base = "if7103_tarea2_b82444";
+  
+  $conexion = mysqli_connect($host,$user,$password,$data_base);
+
   $datosRedes = "SELECT * FROM  prob_redes";
   $conexionRedes = mysqli_query($connection, $datosRedes);
 

@@ -55,13 +55,14 @@ function metodo_naive_bayes($estilo,$promedio,$sexo){
     $nParaiso = 38/76;
     
     //Producto de frecuencia
-    //If que verifica cual es el valor mayor para escoger el recinto
+    //Compara los totales para establecer cual es el mayor valor
     if(($frecuenciaTurrialba * $nTurrialba) > ($frecuenciaParaiso * $nParaiso)):
         $recinto='Turrialba';
     else:
         $recinto='Paraiso';
     endif;
-    return $recinto;
+
+    return $recinto;//Retorna el valor
 }
 
 ?>

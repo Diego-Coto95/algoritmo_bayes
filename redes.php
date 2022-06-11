@@ -52,15 +52,15 @@ Escoja las opciones para calcular el tipo de red...<big></big>
         </td>
         <td style="vertical-align: top;">
         <select name="capacity" id="capacity">
-        <option value="1">Baja</option>
-        <option value="2">Media</option>
-        <option value="3">Alta</option>
+        <option value="Low">Baja</option>
+        <option value="Medium">Media</option>
+        <option value="High">Alta</option>
         </select>Capacidad total de la red</td>
         <td style="vertical-align: top;">
         <select name="costo" id="costo">
-        <option value="1">Bajo</option>
-        <option value="2">Medio</option>
-        <option value="3">Alto</option>
+        <option value="Low">Bajo</option>
+        <option value="Medium">Medio</option>
+        <option value="High">Alto</option>
         </select>Costo de la red</td>
       </tr>
     </tbody>
