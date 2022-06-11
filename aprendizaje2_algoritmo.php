@@ -4,67 +4,79 @@ function metodo_naive_bayes($recinto,$promedio,$sexo){
   $host = "163.178.107.10";
   $user = "laboratorios";
   $password = "KmZpo.2796";
-  $data_base = "if7103_tarea2_b72204";
-  //$data_base = "if7103_tarea2_b82444";
-  
+  $data_base = "if7103_tarea2_b82444";
   $conexion = mysqli_connect($host,$user,$password,$data_base);
 
-  $datosSexo = "SELECT * FROM  prob_sexo;";
+  //Trae las valor_probabilidades de sexo
+  $datosSexo = "SELECT * FROM  probabilidad_sexo";
   $conexionSexo = mysqli_query($conexion, $datosSexo);
 
-  $datosPromedio = "SELECT * FROM  prob_promedio;";
+  //Trae las valor_probabilidades de promedio
+  $datosPromedio = "SELECT * FROM  probabilidad_promedio";
   $conexionPromedio = mysqli_query($conexion, $datosPromedio);
 
-  $datosRecinto = "SELECT * FROM  prob_recinto;";
+  //Trae las valor_probabilidades de recinto
+  $datosRecinto = "SELECT * FROM  probabilidad_recinto";
   $conexionRecinto = mysqli_query($conexion, $datosRecinto);
+
+  //Trae las frecuencias de estilo2
+  $datosFrecuenciasEsilo2 = "SELECT * FROM frecuencias_estilo2";
+  $conexionFrecuenciaEsilo2 = mysqli_query($conexion, $datosFrecuenciasEsilo2);
 
   $frecuenciaAcomodador= 1;
   $frecuenciaAsimilador = 1;
   $frecuenciaConvergente = 1;
   $frecuenciaDivergente = 1;
   
-
+  //Datos para comparar el sexo 
   while ($row = mysqli_fetch_array($conexionSexo)) {       
-    if ($row['sexo'] == $sexo && $row['criterio'] == 'ACOMODADOR'):
-      $frecuenciaAcomodador = $frecuenciaAcomodador * $row['probabilidad'];
-    elseif ($row['sexo'] == $sexo && $row['criterio'] == 'ASIMILADOR'):
-      $frecuenciaAsimilador = $frecuenciaAsimilador * $row['probabilidad'];
-    elseif ($row['sexo'] == $sexo && $row['criterio'] == 'CONVERGENTE'):
-      $frecuenciaConvergente = $frecuenciaConvergente * $row['probabilidad'];
-    elseif ($row['sexo'] == $sexo && $row['criterio'] == 'DIVERGENTE'):
-      $frecuenciaDivergente = $frecuenciaDivergente * $row['probabilidad'];
+    if ($row['sexo'] == $sexo && $row['valor_caracteristica'] == 'ACOMODADOR'):
+      $frecuenciaAcomodador = $frecuenciaAcomodador * $row['valor_probabilidad'];
+    elseif ($row['sexo'] == $sexo && $row['valor_caracteristica'] == 'ASIMILADOR'):
+      $frecuenciaAsimilador = $frecuenciaAsimilador * $row['valor_probabilidad'];
+    elseif ($row['sexo'] == $sexo && $row['valor_caracteristica'] == 'CONVERGENTE'):
+      $frecuenciaConvergente = $frecuenciaConvergente * $row['valor_probabilidad'];
+    elseif ($row['sexo'] == $sexo && $row['valor_caracteristica'] == 'DIVERGENTE'):
+      $frecuenciaDivergente = $frecuenciaDivergente * $row['valor_probabilidad'];
     endif;        
   }
+
+  //Datos para comparar el promedio 
   while ($row = mysqli_fetch_array($conexionPromedio)) {     
-    if ($row['promedio'] == $promedio && $row['criterio'] == 'ACOMODADOR'):
-      $frecuenciaAcomodador = $frecuenciaAcomodador * $row['probabilidad'];
-    elseif ($row['promedio'] == $promedio && $row['criterio'] == 'ASIMILADOR'):
-      $frecuenciaAsimilador = $frecuenciaAsimilador * $row['probabilidad'];
-    elseif ($row['promedio'] == $promedio && $row['criterio'] == 'CONVERGENTE'):
-      $frecuenciaConvergente = $frecuenciaConvergente * $row['probabilidad'];
-    elseif ($row['promedio'] == $promedio && $row['criterio'] == 'DIVERGENTE'):
-      $frecuenciaDivergente = $frecuenciaDivergente * $row['probabilidad'];
+    if ($row['promedio'] == $promedio && $row['valor_caracteristica'] == 'ACOMODADOR'):
+      $frecuenciaAcomodador = $frecuenciaAcomodador * $row['valor_probabilidad'];
+    elseif ($row['promedio'] == $promedio && $row['valor_caracteristica'] == 'ASIMILADOR'):
+      $frecuenciaAsimilador = $frecuenciaAsimilador * $row['valor_probabilidad'];
+    elseif ($row['promedio'] == $promedio && $row['valor_caracteristica'] == 'CONVERGENTE'):
+      $frecuenciaConvergente = $frecuenciaConvergente * $row['valor_probabilidad'];
+    elseif ($row['promedio'] == $promedio && $row['valor_caracteristica'] == 'DIVERGENTE'):
+      $frecuenciaDivergente = $frecuenciaDivergente * $row['valor_probabilidad'];
     endif; 
   }
+
+  //Datos para comparar el recinto 
   while ($row = mysqli_fetch_array($conexionRecinto)) {     
-    if ($row['recinto'] == $recinto && $row['criterio'] == 'ACOMODADOR'):
-      $frecuenciaAcomodador = $frecuenciaAcomodador * $row['probabilidad'];
-    elseif ($row['recinto'] == $recinto && $row['criterio'] == 'ASIMILADOR'):
-      $frecuenciaAsimilador = $frecuenciaAsimilador * $row['probabilidad'];
-    elseif ($row['recinto'] == $recinto && $row['criterio'] == 'CONVERGENTE'):
-      $frecuenciaConvergente = $frecuenciaConvergente * $row['probabilidad'];
-    elseif ($row['recinto'] == $recinto && $row['criterio'] == 'DIVERGENTE'):
-      $frecuenciaDivergente = $frecuenciaDivergente * $row['probabilidad'];
+    if ($row['recinto'] == $recinto && $row['valor_caracteristica'] == 'ACOMODADOR'):
+      $frecuenciaAcomodador = $frecuenciaAcomodador * $row['valor_probabilidad'];
+    elseif ($row['recinto'] == $recinto && $row['valor_caracteristica'] == 'ASIMILADOR'):
+      $frecuenciaAsimilador = $frecuenciaAsimilador * $row['valor_probabilidad'];
+    elseif ($row['recinto'] == $recinto && $row['valor_caracteristica'] == 'CONVERGENTE'):
+      $frecuenciaConvergente = $frecuenciaConvergente * $row['valor_probabilidad'];
+    elseif ($row['recinto'] == $recinto && $row['valor_caracteristica'] == 'DIVERGENTE'):
+      $frecuenciaDivergente = $frecuenciaDivergente * $row['valor_probabilidad'];
     endif; 
   }
   
-  $estilo = "";
-  //Cantidad de registros por recinto para sacar el producto final
-  $nAcomodador =14/76;
-  $nAsimilador = 21/76;
-  $nConvergente = 21/76;
-  $nDivergente = 21/76;
+  //Bucle que trae las frecuencias ya calculadas de estilo2
+  while ($row = mysqli_fetch_array($conexionFrecuenciaEsilo2)) { 
+    //Datos provenientes de la Base de datos
+    $nAcomodador = $row['nAcomodador'];
+    $nAsimilador = $row['nAsimilador'];
+    $nConvergente = $row['nConvergente'];
+    $nDivergente = $row['nDivergente'];
+  }
 
+  $estilo = "";
   
   //Producto de frecuencia
   //Compara los totales para establecer cual es el mayor valor

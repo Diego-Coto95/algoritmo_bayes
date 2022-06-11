@@ -2,20 +2,40 @@
 
 function metodo_naive_bayes($a,$b,$c,$d,$e,$f,$g,$h){
 
-  
   //Conexión a la base de datos MySql
   $host = "163.178.107.10";
   $user = "laboratorios";
   $password = "KmZpo.2796";
-  $data_base = "if7103_tarea2_b72204";
-  //$data_base = "if7103_tarea2_b82444";
+  $data_base = "if7103_tarea2_b82444";
   $conexion = mysqli_connect($host,$user,$password,$data_base);
-  $datosProfesores = "SELECT * FROM prob_profesores"; //Trae los datos requeridos de la base de datos y se guardan en la variable $sql
+
+  //Trae las probabilidades de profesores
+  // $profesores = "SELECT * FROM profesores";
+  // $conexionProfes = mysqli_query( $conexion, $profesores );
+
+  //Trae las probabilidades de profesores
+  $datosProfesores = "SELECT * FROM probabilidad_profesores";
   $conexionProfesores = mysqli_query( $conexion, $datosProfesores );
+
+  //Trae las frecuencias de profesor
+  $datosFrecuenciasProfesores = "SELECT * FROM frecuencias_sexo";
+  $conexionFrecuenciaProfesores = mysqli_query($conexion, $datosFrecuenciasProfesores);
 
   $frecuenciaClaseB = 1;
   $frecuenciaClaseI = 1;
   $frecuenciaClaseA = 1;
+
+  // while ($row = mysqli_fetch_array($conexionProfesores)) {
+  //   //Variables que guardan los valores traidos de la base de datos
+  //   $datoA = $row['a'];
+  //   $datoB = $row['b'];
+  //   $datoC = $row['c'];
+  //   $datoD = $row['d'];
+  //   $datoE = $row['e'];
+  //   $datoF = $row['f'];
+  //   $datoG = $row['g'];
+  //   $datoH = $row['h'];
+  // }
 
   while ($row = mysqli_fetch_array($conexionProfesores)) {
     //Variables que guardan los valores traidos de la base de datos
@@ -28,75 +48,89 @@ function metodo_naive_bayes($a,$b,$c,$d,$e,$f,$g,$h){
     $datoG = $row['g'];
     $datoH = $row['h'];
 
-    if($row['class'] == 'Beginner' && $row['crit_a'] == $a):
+    //Datos para comparar el a 
+    if($row['class'] == 'Beginner' && $row['valor_caracteristica_a'] == $a):
       $frecuenciaClaseB = $frecuenciaClaseB * $datoA;
-    elseif($row['class'] == 'Intermediate' && $row['crit_a'] == $a):
+    elseif($row['class'] == 'Intermediate' && $row['valor_caracteristica_a'] == $a):
       $frecuenciaClaseI = $frecuenciaClaseI *  $datoA;
-    elseif($row['class'] == 'Advanced' && $row['crit_a'] == $a):
+    elseif($row['class'] == 'Advanced' && $row['valor_caracteristica_a'] == $a):
       $frecuenciaClaseA = $frecuenciaClaseA * $datoA;
     endif;
 
-    if($row['class'] == 'Beginner' && $row['crit_b'] == $b):
+    //Datos para comparar el b
+    if($row['class'] == 'Beginner' && $row['valor_caracteristica_b'] == $b):
       $frecuenciaClaseB = $frecuenciaClaseB * $datoB;
-    elseif($row['class'] == 'Intermediate' && $row['crit_b'] == $b):
+    elseif($row['class'] == 'Intermediate' && $row['valor_caracteristica_b'] == $b):
      $frecuenciaClaseI = $frecuenciaClaseI *  $datoB;
-    elseif($row['class'] == 'Advanced' && $row['crit_b'] == $b):
+    elseif($row['class'] == 'Advanced' && $row['valor_caracteristica_b'] == $b):
       $frecuenciaClaseA = $frecuenciaClaseA * $datoB;
     endif;
 
-    if ($row['class'] == 'Beginner'&& $row['crit_c'] == $c):
+    //Datos para comparar el c
+    if ($row['class'] == 'Beginner'&& $row['valor_caracteristica_c'] == $c):
       $frecuenciaClaseB = $frecuenciaClaseB * $datoC;
-    elseif($row['class'] == 'Intermediate' && $row['crit_c'] == $c):
+    elseif($row['class'] == 'Intermediate' && $row['valor_caracteristica_c'] == $c):
       $frecuenciaClaseI = $frecuenciaClaseI * $datoC;
-    elseif($row['class'] == 'Advanced' && $row['crit_c'] == $c):
+    elseif($row['class'] == 'Advanced' && $row['valor_caracteristica_c'] == $c):
       $frecuenciaClaseA = $frecuenciaClaseA * $datoC;
     endif;
 
-    if ($row['class'] == 'Beginner' && $row['crit_d'] == $d):
+    //Datos para comparar el d
+    if ($row['class'] == 'Beginner' && $row['valor_caracteristica_d'] == $d):
       $frecuenciaClaseB = $frecuenciaClaseB * $datoD;
-    elseif($row['class'] == 'Intermediate' && $row['crit_d'] == $d):
+    elseif($row['class'] == 'Intermediate' && $row['valor_caracteristica_d'] == $d):
       $frecuenciaClaseI = $frecuenciaClaseI * $datoD;
-    elseif($row['class'] == 'Advanced' && $row['crit_d'] == $d):
+    elseif($row['class'] == 'Advanced' && $row['valor_caracteristica_d'] == $d):
       $frecuenciaClaseA = $frecuenciaClaseA * $datoD;
     endif;
 
-    if ($row['class'] == 'Beginner' && $row['crit_e'] == $e):
+    //Datos para comparar el e
+    if ($row['class'] == 'Beginner' && $row['valor_caracteristica_e'] == $e):
       $frecuenciaClaseB = $frecuenciaClaseB * $datoE;
-    elseif( $row['class'] ==' Intermediate' && $row['crit_e'] == $e):
+    elseif( $row['class'] ==' Intermediate' && $row['valor_caracteristica_e'] == $e):
       $frecuenciaClaseI = $frecuenciaClaseI * $datoE;
-    elseif($row['class'] == 'Advanced' && $row['crit_e'] == $e):
+    elseif($row['class'] == 'Advanced' && $row['valor_caracteristica_e'] == $e):
       $frecuenciaClaseA = $frecuenciaClaseA * $datoE;
     endif;
 
-    if ($row['class'] == 'Beginner' && $row['crit_f'] == $f):
+    //Datos para comparar el f
+    if ($row['class'] == 'Beginner' && $row['valor_caracteristica_f'] == $f):
       $frecuenciaClaseB = $frecuenciaClaseB * $datoF;
-    elseif($row['class'] == 'Intermediate' && $row['crit_f'] == $f):
+    elseif($row['class'] == 'Intermediate' && $row['valor_caracteristica_f'] == $f):
       $frecuenciaClaseI = $frecuenciaClaseI * $datoF;
-    elseif($row['class'] == 'Advanced' && $row['crit_f'] == $f):
+    elseif($row['class'] == 'Advanced' && $row['valor_caracteristica_f'] == $f):
       $frecuenciaClaseA = $frecuenciaClaseA * $datoF;
     endif;
 
-    if ($row['class'] == 'Beginner' && $row['crit_g'] == $g):
+    //Datos para comparar el g
+    if ($row['class'] == 'Beginner' && $row['valor_caracteristica_g'] == $g):
       $frecuenciaClaseB = $frecuenciaClaseB * $datoG;
-    elseif($row['class'] == 'Intermediate' && $row['crit_g'] == $g):
+    elseif($row['class'] == 'Intermediate' && $row['valor_caracteristica_g'] == $g):
       $frecuenciaClaseI = $frecuenciaClaseI * $datoG;
-    elseif($row['class'] == 'Advanced' && $row['crit_g'] == $g):
+    elseif($row['class'] == 'Advanced' && $row['valor_caracteristica_g'] == $g):
       $frecuenciaClaseA = $frecuenciaClaseA * $datoG;
     endif;
 
-    if ($row['class'] == 'Beginner' && $row['crit_h'] == $h):
+    //Datos para comparar el h
+    if ($row['class'] == 'Beginner' && $row['valor_caracteristica_h'] == $h):
       $frecuenciaClaseB = $frecuenciaClaseB * $datoH;
-    elseif($row['class'] == 'Intermediate' && $row['crit_h'] == $h):
+    elseif($row['class'] == 'Intermediate' && $row['valor_caracteristica_h'] == $h):
       $frecuenciaClaseI = $frecuenciaClaseI * $datoH;
-    elseif($row['class'] == 'Advanced' && $row['crit_h'] == $h):
+    elseif($row['class'] == 'Advanced' && $row['valor_caracteristica_h'] == $h):
       $frecuenciaClaseA = $frecuenciaClaseA * $datoH;
     endif;
   } 
 
+
+  //Bucle que trae las frecuencias ya calculadas de profesores
+  while ($row = mysqli_fetch_array($conexionFrecuenciaProfesores)) { 
+    //Datos provenientes de la Base de datos
+    $nClaseB = $row['nBeginner'];
+    $nClaseI = $row['nIntermediate'];
+    $nClaseA = $row['nAdvanced'];
+  }
+
   $profesor = "";
-  $nClaseB = 9/20;
-  $nClaseI = 6/20;
-  $nClaseA = 5/20;
 
   //Producto de frecuencia
   //Compara los totales para establecer cual es el mayor valor

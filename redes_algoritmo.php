@@ -9,55 +9,71 @@ function metodo_naive_bayes($reliability,$number_of,$capacity,$costo){
   $host = "163.178.107.10";
   $user = "laboratorios";
   $password = "KmZpo.2796";
-  $data_base = "if7103_tarea2_b72204";
-  //$data_base = "if7103_tarea2_b82444";
-  
+  $data_base = "if7103_tarea2_b82444";
   $conexion = mysqli_connect($host,$user,$password,$data_base);
 
-  $datosRedes = "SELECT * FROM  prob_redes";
+  //Trae las probabilidades de redes
+  $datosRedes = "SELECT * FROM  probabilidad_redes";
   $conexionRedes = mysqli_query($connection, $datosRedes);
+
+  //Trae las frecuencias de redes
+  $datosFrecuenciasRedes = "SELECT * FROM frecuencias_redes";
+  $conexionFrecuenciaRedes = mysqli_query($conexion, $datosFrecuenciasRedes);
+
 
   //while que recorre todos los valores traidos desde la base de datos
   while ($row = mysqli_fetch_array($conexionRedes)) {
       //Datos provenientes de la Base de datos
-      $datoReliability = $row['reliability'];
-      $datoNumero = $row['number_of_links'];
-      $datoCapacity = $row['capacity'];
-      $datoCosto = $row['costo'];
+      $datoReliability = $row['valor_probabilidad_reliability'];
+      $datoNumero = $row['valor_probabilidad_number_of'];
+      $datoCapacity = $row['valor_probabilidad_capacity'];
+      $datoCosto = $row['valor_probabilidad_costo'];
 
-      if($row['class'] == 'A' && $row['crit_reliability'] == $reliability):
+      //Datos para comparar el reliability 
+      if($row['class'] == 'A' && $row['valor_caracteristica_reliability'] == $reliability):
         $frecuenciaClaseA = $frecuenciaClaseA * $datoReliability;
-      elseif($row['class'] == 'B' && $row['crit_reliability'] == $reliability):
+      elseif($row['class'] == 'B' && $row['valor_caracteristica_reliability'] == $reliability):
         $frecuenciaClaseB = $frecuenciaClaseB * $datoReliability;
       endif;
-      if ($row['class'] == 'A' && $row['crit_number_of_links'] == $number_of):
+
+      //Datos para comparar el number of links 
+      if ($row['class'] == 'A' && $row['valor_caracteristica_number_of'] == $number_of):
         $frecuenciaClaseA = $frecuenciaClaseA * $datoNumero;
-      elseif($row['class'] == 'B' && $row['number_of_links'] == $number_of):
+      elseif($row['class'] == 'B' && $row['valor_caracteristica_number_of'] == $number_of):
         $frecuenciaClaseB = $frecuenciaClaseB * $datoNumero;
       endif;
-      if($row['class'] == 'A' && $row['crit_capacity'] == $capacity):
+
+      //Datos para comparar el capacity 
+      if($row['class'] == 'A' && $row['valor_caracteristica_capacity'] == $capacity):
         $frecuenciaClaseA = $frecuenciaClaseA * $datoCapacity;
-      elseif($row['class'] == 'B' && $row['crit_capacity'] == $capacity):
+      elseif($row['class'] == 'B' && $row['valor_caracteristica_capacity'] == $capacity):
         $frecuenciaClaseB = $frecuenciaClaseB * $datoCapacity;
       endif;
-      if($row['class'] == 'A' && $row['costo'] == $costo):
+
+      //Datos para comparar el costo 
+      if($row['class'] == 'A' && $row['valor_caracteristica_costo'] == $costo):
         $frecuenciaClaseA = $frecuenciaClaseA * $datoCosto;
-      elseif($row['class'] == 'B' && $row['costo'] == $costo):
+      elseif($row['class'] == 'B' && $row['valor_caracteristica_costo'] == $costo):
         $frecuenciaClaseB = $frecuenciaClaseB * $datoCosto;
       endif;        
   }
 
+  //Bucle que trae las frecuencias ya calculadas de redes
+  while ($row = mysqli_fetch_array($conexionFrecuenciaRedes)) { 
+    //Datos provenientes de la Base de datos
+    $nClaseA = $row['nClaseA'];
+    $nClaseB = $row['nClaseB'];
+}
   $redes = "";
-  $nClaseA = 18/35;
-  $nClaseB = 19/35;
-
-
+  //Producto de frecuencia
+  //Compara los totales para establecer cual es el mayor valor
   if(($frecuenciaClaseA * $nClaseA) > ($frecuenciaClaseB * $nClaseB)):
       $redes = 'A';
   else:
       $redes = 'B';
   endif;
-  return $redes;
+
+  return $redes;//Retorna el valor
 }
 
 ?>
