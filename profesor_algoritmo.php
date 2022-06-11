@@ -38,7 +38,6 @@ function metodo_naive_bayes($a,$b,$c,$d,$e,$f,$g,$h){
   // }
 
   while ($row = mysqli_fetch_array($conexionProfesores)) {
-    //Variables que guardan los valores traidos de la base de datos
     $datoA = $row['a'];
     $datoB = $row['b'];
     $datoC = $row['c'];

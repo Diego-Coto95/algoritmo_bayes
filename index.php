@@ -2,7 +2,7 @@
     <div class="row">
         <div class="jumbotron">
             <h1 class="display-3">Naive Bayes</h1>
-            <p class="lead">Mide las diferencias y similitudes entre ejemplos de personas o cosas.</p>
+            <p class="lead">Clasifica personas o cosas.</p>
             <hr class="my-2">
             <p>Pulse el botón para iniciar</p>
             <p class="lead">
