@@ -8,7 +8,7 @@ $promedio=(isset($_POST['promedio']))?$_POST['promedio']:"";
 $sexo=(isset($_POST['sexo']))?$_POST['sexo']:"";
 
 /*Esta variable es la que se le mostrará al usuario con el resultado del algoritmo*/
-$resultado = metodo_naive_bayes1($estilo,$promedio,$sexo);
+$resultado = metodo_naive_bayes($estilo,$promedio,$sexo);
 
 
 ?>
