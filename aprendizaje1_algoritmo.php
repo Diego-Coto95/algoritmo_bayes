@@ -1,5 +1,4 @@
 <?php 
- 
 function metodo_naive_bayes($ca,$ec,$ea,$or){
         //Conexion con la base de datos
         $host = "163.178.107.10";
