@@ -4,7 +4,7 @@ function insertaFrecuenciaEstilo(){
     //Conexion con la base de datos
     $host = "163.178.107.10";
     $user = "laboratorios";
-    $password = "KmZpo.2796";
+    $password = "Uy&)&nfC7QqQau.%278UQ24/=%";
     $data_base = "if7103_tarea2_b82444";
     $conexion = mysqli_connect($host,$user,$password,$data_base);
     $sql = "SELECT * FROM recintoEstilo";
@@ -68,7 +68,7 @@ function insertaProbabilidadEstilo1(){
     //Conexion con la base de datos
     $host = "163.178.107.10";
     $user = "laboratorios";
-    $password = "KmZpo.2796";
+    $password = "Uy&)&nfC7QqQau.%278UQ24/=%";
     $data_base = "if7103_tarea2_b82444";
     $conexion = mysqli_connect($host,$user,$password,$data_base);
 
